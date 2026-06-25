@@ -1,0 +1,2832 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Scorify: Redefining STEM Assessment</title>
+  <meta name="description" content="AI-Powered Bulk Grading & Intelligent Analytics for Handwritten Exams. Scorify is a next-generation academic & investor pitch deck for STEM evaluation automation.">
+  
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <style>
+    @page {
+      size: landscape;
+      margin: 0 !important;
+    }
+
+    /* RESET & CORE VARIABLES */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+    }
+    
+    :root {
+      --bg-dark: #0f111a;
+      --bg-card: rgba(17, 24, 39, 0.6);
+      --bg-card-hover: rgba(30, 41, 59, 0.7);
+      --border-color: rgba(255, 255, 255, 0.08);
+      --primary: #6366f1; /* Indigo */
+      --primary-glow: rgba(99, 102, 241, 0.15);
+      --secondary: #06b6d4; /* Cyan */
+      --accent: #a855f7; /* Purple */
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --text-highlight: #38bdf8;
+      --success: #10b981;
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Inter', sans-serif;
+      --font-mono: 'Fira Code', monospace;
+      --slide-width: 1280px;
+      --slide-height: 720px;
+      --transition-speed: 0.5s;
+    }
+
+    body {
+      background-color: #030408;
+      color: var(--text-main);
+      font-family: var(--font-body);
+      overflow: hidden;
+      height: 100vh;
+      width: 100vw;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* SCALABLE PRESENTATION CONTAINER */
+    .deck-container {
+      position: relative;
+      width: var(--slide-width);
+      height: var(--slide-height);
+      background-color: var(--bg-dark);
+      background-image: 
+        radial-gradient(at 0% 0%, rgba(99, 102, 241, 0.08) 0px, transparent 50%),
+        radial-gradient(at 100% 100%, rgba(6, 182, 212, 0.08) 0px, transparent 50%);
+      border: 1px solid var(--border-color);
+      border-radius: 16px;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      overflow: hidden;
+      transform-origin: center center;
+    }
+
+    .slides-wrapper {
+      position: relative;
+      width: 100%;
+      height: 100%;
+    }
+
+    /* SLIDE STYLING */
+    .slide {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      padding: 50px 70px;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity var(--transition-speed) ease, transform var(--transition-speed) ease;
+      transform: translateX(50px);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(0);
+    }
+
+    .slide.prev {
+      transform: translateX(-50px);
+    }
+
+    /* HEADER & FOOTER */
+    .slide-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+
+    .logo-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+
+    .brand-logo-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .brand-logo-img {
+      height: 28px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .univ-logo-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border-left: 1px solid rgba(255, 255, 255, 0.15);
+      padding-left: 20px;
+    }
+
+    .univ-logo-img {
+      height: 28px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    .logo-text {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 20px;
+      letter-spacing: 0.5px;
+      background: linear-gradient(to right, #ffffff, #cbd5e1);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .univ-text {
+      font-family: var(--font-display);
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+    }
+
+    .slide-tag {
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      color: var(--secondary);
+      border: 1px solid rgba(6, 182, 212, 0.2);
+      padding: 4px 10px;
+      border-radius: 20px;
+      background: rgba(6, 182, 212, 0.05);
+    }
+
+    .slide-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 20px;
+      padding-top: 15px;
+      border-top: 1px solid rgba(255, 255, 255, 0.04);
+      color: var(--text-muted);
+      font-size: 12px;
+    }
+
+    .slide-number-display {
+      display: none;
+    }
+
+    .footer-left {
+      display: flex;
+      gap: 15px;
+    }
+
+    .footer-dot {
+      color: var(--primary);
+    }
+
+    /* TYPOGRAPHY */
+    h1, h2, h3 {
+      font-family: var(--font-display);
+    }
+
+    .slide-title {
+      font-size: 38px;
+      font-weight: 800;
+      line-height: 1.2;
+      background: linear-gradient(to right, #ffffff, #f1f5f9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 6px;
+    }
+
+    .slide-subtitle {
+      font-size: 18px;
+      color: var(--text-muted);
+      font-weight: 400;
+      margin-bottom: 24px;
+    }
+
+    .slide-body {
+      flex-grow: 1;
+      display: flex;
+      align-items: stretch;
+      gap: 40px;
+      overflow: hidden;
+    }
+
+    /* GRID & COLUMN LAYOUTS */
+    .col-left {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .col-right {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* GENERAL COMPONENTS */
+    .bullet-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .bullet-list li {
+      position: relative;
+      padding-left: 28px;
+      font-size: 16px;
+      line-height: 1.5;
+      color: #cbd5e1;
+    }
+
+    .bullet-list li::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 8px;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--primary);
+      box-shadow: 0 0 8px var(--primary);
+    }
+
+    .bullet-list li strong {
+      color: var(--text-main);
+    }
+
+    /* GRID CARDS */
+    .grid-2x2 {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      width: 100%;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+      width: 100%;
+    }
+
+    .glow-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glow-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, var(--primary-glow), transparent);
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+
+    .glow-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(99, 102, 241, 0.3);
+      box-shadow: 0 10px 30px rgba(99, 102, 241, 0.1);
+      background: var(--bg-card-hover);
+    }
+
+    .glow-card:hover::before {
+      opacity: 1;
+    }
+
+    .card-icon {
+      width: 44px;
+      height: 44px;
+      border-radius: 8px;
+      background: rgba(99, 102, 241, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--primary);
+      margin-bottom: 16px;
+      font-size: 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .cyan-icon {
+      background: rgba(6, 182, 212, 0.1);
+      color: var(--secondary);
+    }
+
+    .purple-icon {
+      background: rgba(168, 85, 247, 0.1);
+      color: var(--accent);
+    }
+
+    .card-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: white;
+      position: relative;
+      z-index: 1;
+    }
+
+    .card-desc {
+      font-size: 14px;
+      color: var(--text-muted);
+      line-height: 1.5;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* STATS & METRIC CARDS */
+    .stat-wrapper {
+      display: flex;
+      gap: 20px;
+      margin-top: 24px;
+    }
+
+    .stat-badge {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      padding: 16px 24px;
+      border-radius: 12px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .stat-num {
+      font-family: var(--font-display);
+      font-size: 32px;
+      font-weight: 800;
+      color: var(--secondary);
+      line-height: 1;
+      margin-bottom: 8px;
+    }
+
+    .stat-label {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    /* ROADMAP STYLES */
+    .roadmap-container {
+      display: flex;
+      justify-content: space-between;
+      align-items: stretch;
+      width: 100%;
+      margin: auto 0;
+      gap: 15px;
+    }
+
+    .roadmap-step {
+      flex: 1;
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      position: relative;
+    }
+
+    .roadmap-step.active-step {
+      border-color: var(--primary);
+      background: rgba(99, 102, 241, 0.08);
+      box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);
+    }
+
+    .step-number {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--primary);
+      letter-spacing: 1px;
+      margin-bottom: 12px;
+      text-transform: uppercase;
+    }
+
+    .roadmap-step.active-step .step-number {
+      color: var(--secondary);
+    }
+
+    .step-title {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--text-main);
+    }
+
+    .step-desc {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.4;
+    }
+
+    .roadmap-connector {
+      position: absolute;
+      right: -10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 20px;
+      height: 2px;
+      background: rgba(255, 255, 255, 0.1);
+      z-index: 10;
+    }
+
+    /* CONTROLS & HUD */
+    .controls-overlay {
+      position: absolute;
+      bottom: 25px;
+      right: 25px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      z-index: 100;
+    }
+
+    .btn-nav {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: rgba(15, 17, 26, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-main);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-nav:hover {
+      background: var(--primary);
+      border-color: var(--primary);
+      box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+    }
+
+    .btn-nav:disabled {
+      opacity: 0.3;
+      cursor: not-allowed;
+    }
+
+    .progress-bar-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: rgba(255, 255, 255, 0.05);
+      z-index: 100;
+    }
+
+    .progress-bar-fill {
+      height: 100%;
+      background: linear-gradient(to right, var(--primary), var(--secondary));
+      width: 0%;
+      transition: width 0.3s ease;
+    }
+
+    .slide-indicator {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-muted);
+      min-width: 60px;
+      text-align: center;
+    }
+
+    /* INTERACTIVE MOCKUPS */
+    .mock-browser {
+      background: #1e293b;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      width: 100%;
+      height: 380px;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+      overflow: hidden;
+    }
+
+    .mock-header {
+      background: #0f172a;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      position: relative;
+    }
+
+    .mock-dots {
+      display: flex;
+      gap: 6px;
+    }
+
+    .mock-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: #475569;
+    }
+
+    .mock-dot.red { background: #ef4444; }
+    .mock-dot.yellow { background: #f59e0b; }
+    .mock-dot.green { background: #10b981; }
+
+    .mock-address {
+      background: #1e293b;
+      padding: 4px 20px;
+      border-radius: 6px;
+      font-size: 11px;
+      color: var(--text-muted);
+      width: 60%;
+      text-align: center;
+      font-family: var(--font-mono);
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .mock-content {
+      flex-grow: 1;
+      padding: 24px;
+      background: #0b0f19;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* MOCK - BULK GRADING */
+    .drag-drop-zone {
+      border: 2px dashed rgba(99, 102, 241, 0.4);
+      border-radius: 10px;
+      background: rgba(99, 102, 241, 0.02);
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .drag-drop-zone:hover {
+      background: rgba(99, 102, 241, 0.05);
+      border-color: var(--primary);
+    }
+
+    .cloud-icon {
+      font-size: 40px;
+      color: var(--primary);
+      margin-bottom: 12px;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* MOCK - SINGLE STUDENT EVALUATION */
+    .evaluation-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 16px;
+      height: 100%;
+    }
+
+    .paper-scan {
+      background: #ffffff;
+      color: #1e293b;
+      border-radius: 8px;
+      padding: 20px;
+      font-family: 'Outfit', sans-serif;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+    }
+
+    .handwriting {
+      font-family: 'Fira Code', monospace;
+      font-size: 16px;
+      font-weight: 500;
+      color: #0f172a;
+      line-height: 1.8;
+    }
+
+    .ai-marker {
+      border: 1px solid var(--success);
+      background: rgba(16, 185, 129, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 12px;
+      color: var(--success);
+      font-weight: bold;
+      display: inline-block;
+      margin-left: 10px;
+    }
+
+    .ai-marker.error {
+      border-color: var(--danger);
+      background: rgba(239, 68, 68, 0.1);
+      color: var(--danger);
+    }
+
+    .evaluation-rubric {
+      background: #111827;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.05);
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .rubric-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px;
+      border-radius: 6px;
+      background: rgba(255,255,255,0.02);
+      border: 1px solid rgba(255,255,255,0.05);
+      font-size: 12px;
+    }
+
+    /* MOCK - DASHBOARD */
+    .dashboard-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .mini-metric {
+      background: #111827;
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 8px;
+      padding: 12px;
+    }
+
+    .mini-metric-val {
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--secondary);
+    }
+
+    .chart-container {
+      flex-grow: 1;
+      background: #111827;
+      border: 1px solid rgba(255,255,255,0.05);
+      border-radius: 8px;
+      padding: 12px;
+      display: flex;
+      align-items: flex-end;
+      gap: 15px;
+      justify-content: space-around;
+      height: 160px;
+    }
+
+    .chart-bar-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      width: 40px;
+    }
+
+    .chart-bar {
+      width: 100%;
+      border-radius: 4px 4px 0 0;
+      background: linear-gradient(to top, var(--primary), var(--secondary));
+      transition: height 1s ease;
+      min-height: 10px;
+    }
+
+    .chart-label {
+      font-size: 10px;
+      color: var(--text-muted);
+    }
+
+    /* OUTLINE DRAWER */
+    .drawer-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.5);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .drawer-overlay.open {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .outline-drawer {
+      position: absolute;
+      top: 0;
+      left: -320px;
+      width: 320px;
+      height: 100%;
+      background: #0f111a;
+      border-right: 1px solid var(--border-color);
+      z-index: 1001;
+      transition: left 0.3s ease;
+      padding: 30px 20px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .outline-drawer.open {
+      left: 0;
+    }
+
+    .drawer-title {
+      font-family: var(--font-display);
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btn-close-drawer {
+      background: none;
+      border: none;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-size: 20px;
+    }
+
+    .outline-list {
+      list-style: none;
+      overflow-y: auto;
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      padding-right: 5px;
+    }
+
+    .outline-item {
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 13px;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .outline-item:hover, .outline-item.active {
+      color: white;
+      background: rgba(255,255,255,0.04);
+    }
+
+    .outline-item.active {
+      border-left: 3px solid var(--primary);
+      background: rgba(99, 102, 241, 0.08);
+      font-weight: 600;
+    }
+
+    .outline-num {
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--primary);
+    }
+
+    .btn-action-outline {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid var(--border-color);
+      border-radius: 20px;
+      padding: 6px 12px;
+      font-size: 12px;
+      color: var(--text-muted);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s;
+    }
+
+    .btn-action-outline:hover {
+      color: white;
+      background: rgba(255,255,255,0.08);
+      border-color: rgba(255,255,255,0.2);
+    }
+
+    .btn-outline-trigger {
+      position: absolute;
+      top: 25px;
+      left: 25px;
+      z-index: 90;
+    }
+
+    .btn-fs-trigger {
+      position: absolute;
+      top: 25px;
+      right: 25px;
+      z-index: 90;
+    }
+
+    /* KEYBOARD HINT */
+    .keyboard-tip {
+      position: absolute;
+      bottom: 25px;
+      left: 25px;
+      font-size: 11px;
+      color: var(--text-muted);
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--border-color);
+      padding: 4px 8px;
+      border-radius: 4px;
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      font-family: var(--font-mono);
+    }
+    
+    .key-badge {
+      background: #1e293b;
+      border: 1px solid #475569;
+      padding: 1px 4px;
+      border-radius: 3px;
+      color: white;
+    }
+
+    /* TITLE SLIDE LOGOS */
+    .hero-logos {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 40px;
+      margin-bottom: 20px;
+    }
+
+    .hero-logo-img {
+      height: 90px;
+      width: auto;
+      object-fit: contain;
+    }
+
+    @media (max-width: 1300px) {
+      body {
+        padding: 10px;
+      }
+      .deck-container {
+        transform: scale(0.9);
+      }
+    }
+    @media (max-width: 1180px) {
+      .deck-container {
+        transform: scale(0.75);
+      }
+    }
+
+    @media print {
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+      }
+      @page {
+        size: 16in 9in;
+        margin: 0 !important;
+      }
+      html, body {
+        background: #0f111a !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        overflow: visible !important;
+      }
+      /* Fix background-clip text gradient rendering bug in PDF export */
+      h1, h2, h3, .slide-title, .logo-text {
+        background: none !important;
+        -webkit-background-clip: initial !important;
+        background-clip: initial !important;
+        -webkit-text-fill-color: initial !important;
+        color: #ffffff !important;
+      }
+      .deck-container {
+        border: none !important;
+        box-shadow: none !important;
+        transform: none !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        overflow: visible !important;
+      }
+      .slides-wrapper {
+        width: 100% !important;
+        height: 100% !important;
+        overflow: visible !important;
+      }
+      .slide {
+        position: relative !important;
+        display: flex !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        page-break-after: always !important;
+        break-after: page !important;
+        width: 100vw !important;
+        height: 100vh !important;
+        box-sizing: border-box !important;
+        transform: none !important;
+        top: auto !important;
+        left: auto !important;
+        margin: 0 !important;
+        padding: 50px 70px !important;
+      }
+      .controls-overlay,
+      .progress-bar-container,
+      .btn-outline-trigger,
+      .btn-fs-trigger,
+      .drawer-overlay,
+      .keyboard-tip {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LEFT DRAWER BUTTON -->
+  <button class="btn-action-outline btn-outline-trigger" onclick="toggleOutline()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    Outline
+  </button>
+
+  <!-- FULLSCREEN BUTTON -->
+  <button class="btn-action-outline btn-fs-trigger" onclick="toggleFullscreen()">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3"></path></svg>
+    Full Screen
+  </button>
+
+  <!-- MAIN DECK CONTAINER -->
+  <div class="deck-container" id="deck">
+    
+    <!-- TOP PROGRESS BAR -->
+    <div class="progress-bar-container">
+      <div class="progress-bar-fill" id="progressBar"></div>
+    </div>
+
+    <!-- OUTLINE DRAWER -->
+    <div class="drawer-overlay" id="drawerOverlay" onclick="toggleOutline()">
+      <div class="outline-drawer" id="outlineDrawer" onclick="event.stopPropagation()">
+        <div class="drawer-title">
+          Presentation Slides
+          <button class="btn-close-drawer" onclick="toggleOutline()">&times;</button>
+        </div>
+        <ul class="outline-list" id="outlineList">
+          <!-- Populated by JS -->
+        </ul>
+      </div>
+    </div>
+
+    <!-- SLIDES WRAPPER -->
+    <div class="slides-wrapper">
+
+      <!-- SLIDE 1: WELCOME / PITCH TITLE -->
+      <div class="slide" data-title="Title Slide" data-tag="PITCH DECK">
+        <div class="slide-header">
+          <div class="logo-container">
+            <!-- BRAND LOGO -->
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            
+            <!-- UNIVERSITY LOGO -->
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">Outcome 1</span>
+        </div>
+        <div class="slide-body" style="flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+
+          <h1 style="font-size: 80px; font-weight: 800; line-height: 1.1; margin-bottom: 8px; background: linear-gradient(135deg, #ffffff, #c7d2fe, #818cf8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; letter-spacing: -1.5px;">SCORIFY</h1>
+          <h2 style="font-size: 24px; font-weight: 500; color: var(--secondary); margin-bottom: 8px;">Less grading, more teaching</h2>
+          <p style="font-size: 14px; color: var(--text-muted); font-style: italic; letter-spacing: 0.5px; opacity: 0.8;">AI-powered grading platform for handwritten and essay exams.</p>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left">
+            <span>SCORIFY EDTECH</span>
+            <span class="footer-dot">•</span>
+            <span>FPT UNIVERSITY PLATFORM</span>
+          </div>
+          <div>
+            <span style="font-weight: 600; color: var(--secondary);">Ms. Ngô Thị Tuyết Minh</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- SLIDE 1.5: MEET THE TEAM -->
+      <div class="slide" data-title="Meet the Team" data-tag="OUR TEAM">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">TEAM PROFILE</span>
+        </div>
+        <div class="slide-title">Meet the Team</div>
+        <div class="slide-subtitle">The developers and innovators behind Scorify EdTech platform</div>
+        <div class="slide-body" style="align-items: center; justify-content: center; height: 100%;">
+          <div class="grid-3" style="margin: auto 0; height: 80%; gap: 20px;">
+            
+            <!-- Member 1 -->
+            <div class="glow-card" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-top: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.02); padding: 24px 16px;">
+              <div style="font-size: 32px; margin-bottom: 12px;">👨‍💻</div>
+              <div style="font-size: 16px; font-weight: 700; color: white; margin-bottom: 4px; font-family: var(--font-display);">Nguyễn Huỳnh Nguyên Phú</div>
+              <div style="font-size: 13px; color: var(--secondary); font-family: var(--font-mono); font-weight: 600;">SE196595</div>
+            </div>
+
+            <!-- Member 2 -->
+            <div class="glow-card" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-top: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.02); padding: 24px 16px;">
+              <div style="font-size: 32px; margin-bottom: 12px;">👨‍💻</div>
+              <div style="font-size: 16px; font-weight: 700; color: white; margin-bottom: 4px; font-family: var(--font-display);">Lê Quang Huy</div>
+              <div style="font-size: 13px; color: var(--secondary); font-family: var(--font-mono); font-weight: 600;">SE196862</div>
+            </div>
+
+            <!-- Member 3 -->
+            <div class="glow-card" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-top: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.02); padding: 24px 16px;">
+              <div style="font-size: 32px; margin-bottom: 12px;">👨‍💻</div>
+              <div style="font-size: 16px; font-weight: 700; color: white; margin-bottom: 4px; font-family: var(--font-display);">Hà Nguyễn Đắc Bình</div>
+              <div style="font-size: 13px; color: var(--secondary); font-family: var(--font-mono); font-weight: 600;">SE196669</div>
+            </div>
+
+            <!-- Member 4 -->
+            <div class="glow-card" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-top: 4px solid var(--primary); background: rgba(99, 102, 241, 0.02); padding: 24px 16px;">
+              <div style="font-size: 32px; margin-bottom: 12px;">👨‍💻</div>
+              <div style="font-size: 16px; font-weight: 700; color: white; margin-bottom: 4px; font-family: var(--font-display);">Nguyễn Tuấn Anh</div>
+              <div style="font-size: 13px; color: var(--primary); font-family: var(--font-mono); font-weight: 600;">SE196689</div>
+            </div>
+
+            <!-- Member 5 -->
+            <div class="glow-card" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-top: 4px solid var(--primary); background: rgba(99, 102, 241, 0.02); padding: 24px 16px;">
+              <div style="font-size: 32px; margin-bottom: 12px;">👨‍💻</div>
+              <div style="font-size: 16px; font-weight: 700; color: white; margin-bottom: 4px; font-family: var(--font-display);">Lâm Tùng Quân</div>
+              <div style="font-size: 13px; color: var(--primary); font-family: var(--font-mono); font-weight: 600;">SE193484</div>
+            </div>
+
+            <!-- Member 6 -->
+            <div class="glow-card" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; border-top: 4px solid var(--primary); background: rgba(99, 102, 241, 0.02); padding: 24px 16px;">
+              <div style="font-size: 32px; margin-bottom: 12px;">👨‍💻</div>
+              <div style="font-size: 16px; font-weight: 700; color: white; margin-bottom: 4px; font-family: var(--font-display);">Nguyễn Đắc Trọng</div>
+              <div style="font-size: 13px; color: var(--primary); font-family: var(--font-mono); font-weight: 600;">SE184772</div>
+            </div>
+
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>Scorify Development Team</span></div>
+          <span class="slide-number-display">2 / 12</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 2: SCORIFY IN ONE SLIDE -->
+      <div class="slide" data-title="Executive Summary" data-tag="VENTURE CONCEPT">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">Scorify in One Slide</span>
+        </div>
+        <div class="slide-title">Executive Summary</div>
+        <div class="slide-subtitle">A comprehensive overview of Scorify's market problem, solution, target audience, and core value</div>
+        <div class="slide-body">
+          <div style="display: flex; align-items: stretch; justify-content: space-between; width: 100%; margin: auto 0; height: 85%; gap: 8px;">
+            
+            <!-- Box 1: Problem -->
+            <div class="glow-card" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; border-top: 4px solid var(--danger); background: rgba(239, 68, 68, 0.02); padding: 18px 14px;">
+              <div>
+                <div class="card-icon" style="background: rgba(239, 68, 68, 0.1); color: var(--danger); margin-bottom: 12px; width: 36px; height: 36px; font-size: 16px;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" y1="8" x2="12" y2="12"></line>
+                    <line x1="12" y1="16" x2="12.01" y2="16"></line>
+                  </svg>
+                </div>
+                <div class="card-title" style="color: #ef4444; font-size: 15px; font-weight: 700; margin-bottom: 8px;">Problem</div>
+                <div class="card-desc" style="font-size: 12px; line-height: 1.45;">
+                  Teachers spend too much time preparing grading structures, collecting assignments, and reviewing student work manually.
+                </div>
+              </div>
+              <div style="font-size: 11px; color: var(--text-muted); margin-top: 10px; font-weight: 500; font-family: var(--font-mono);">
+                🔴 Manual Workload
+              </div>
+            </div>
+
+            <!-- Arrow 1 -> 2 -->
+            <div style="display: flex; align-items: center; justify-content: center; width: 20px; color: var(--text-muted); opacity: 0.4;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+
+            <!-- Box 2: Solution -->
+            <div class="glow-card" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; border-top: 4px solid var(--success); background: rgba(16, 185, 129, 0.02); padding: 18px 14px;">
+              <div>
+                <div class="card-icon" style="background: rgba(16, 185, 129, 0.1); color: var(--success); margin-bottom: 12px; width: 36px; height: 36px; font-size: 16px;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                  </svg>
+                </div>
+                <div class="card-title" style="color: var(--success); font-size: 15px; font-weight: 700; margin-bottom: 8px;">Solution</div>
+                <div class="card-desc" style="font-size: 12px; line-height: 1.45;">
+                  Scorify is an AI-supported grading platform that helps teachers create exam sets, upload rubrics, manage classes, and grade student work faster.
+                </div>
+              </div>
+              <div style="font-size: 11px; color: var(--success); margin-top: 10px; font-weight: 500; font-family: var(--font-mono);">
+                🟢 AI-Assisted Platform
+              </div>
+            </div>
+
+            <!-- Arrow 2 -> 3 -->
+            <div style="display: flex; align-items: center; justify-content: center; width: 20px; color: var(--text-muted); opacity: 0.4;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+
+            <!-- Box 3: Target Users -->
+            <div class="glow-card" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; border-top: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.02); padding: 18px 14px;">
+              <div>
+                <div class="card-icon cyan-icon" style="margin-bottom: 12px; width: 36px; height: 36px; font-size: 16px;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="9" cy="7" r="4"></circle>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                  </svg>
+                </div>
+                <div class="card-title" style="color: var(--secondary); font-size: 15px; font-weight: 700; margin-bottom: 8px;">Target Users</div>
+                <div class="card-desc" style="font-size: 11.5px; line-height: 1.4; display: flex; flex-direction: column; gap: 4px;">
+                  <span>• <strong>Teachers:</strong> Streamline workload.</span>
+                  <span>• <strong>Schools:</strong> Standardize evaluation.</span>
+                  <span>• <strong>Students:</strong> Faster feedback loop.</span>
+                </div>
+              </div>
+              <div style="font-size: 11px; color: var(--secondary); margin-top: 10px; font-weight: 500; font-family: var(--font-mono);">
+                🔵 Broad Academic Fit
+              </div>
+            </div>
+
+            <!-- Arrow 3 -> 4 -->
+            <div style="display: flex; align-items: center; justify-content: center; width: 20px; color: var(--text-muted); opacity: 0.4;">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+
+            <!-- Box 4: Core Value -->
+            <div class="glow-card" style="flex: 1; display: flex; flex-direction: column; justify-content: space-between; border-top: 4px solid var(--accent); background: rgba(168, 85, 247, 0.02); padding: 18px 14px;">
+              <div>
+                <div class="card-icon purple-icon" style="margin-bottom: 12px; width: 36px; height: 36px; font-size: 16px;">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                  </svg>
+                </div>
+                <div class="card-title" style="color: var(--accent); font-size: 15px; font-weight: 700; margin-bottom: 8px;">Core Value</div>
+                <div class="card-desc" style="font-size: 12px; line-height: 1.45;">
+                  Scorify centralizes class management, assignment setup, AI-assisted grading, and result approval into one workflow.
+                </div>
+              </div>
+              <div style="font-size: 11px; color: var(--accent); margin-top: 10px; font-weight: 500; font-family: var(--font-mono);">
+                🟣 All-in-One Workflow
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>Scorify Business Concept</span></div>
+          <span class="slide-number-display">2 / 14</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 3: PROBLEM -> SOLUTION -> MVP -->
+      <div class="slide" data-title="MVP Logic" data-tag="MVP CONCEPT">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">Problem to Solution</span>
+        </div>
+        <div class="slide-title">From Problem to MVP Solution</div>
+        <div class="slide-subtitle">Building a targeted product to address core assessment bottlenecks</div>
+        <div class="slide-body" style="position: relative;">
+          <div class="grid-3" style="width: 100%; height: 85%; margin: auto 0; gap: 15px; z-index: 5;">
+            
+            <!-- Column 1: Current Problem -->
+            <div class="glow-card" style="display: flex; flex-direction: column; justify-content: space-between; border-top: 4px solid var(--danger); background: rgba(239, 68, 68, 0.02); padding: 20px 16px;">
+              <div>
+                <div class="card-title" style="color: #ef4444; font-size: 16px; margin-bottom: 12px; font-weight: 700;">1. Current Problem</div>
+                <div class="card-desc" style="display: flex; flex-direction: column; gap: 10px;">
+                  <div style="font-size: 13px; line-height: 1.4;">
+                    <strong style="color: white; display: block; margin-bottom: 2px;">• Manual Grading Overhead</strong>
+                    Evaluating handwritten math and subjective exams manually consumes massive off-duty hours.
+                  </div>
+                  <div style="font-size: 13px; line-height: 1.4;">
+                    <strong style="color: white; display: block; margin-bottom: 2px;">• Fragmented Assessment Setup</strong>
+                    Creating rubrics, exams, and grading keys is scattered across disconnected offline documents.
+                  </div>
+                  <div style="font-size: 13px; line-height: 1.4;">
+                    <strong style="color: white; display: block; margin-bottom: 2px;">• Cohort Management Complexity</strong>
+                    Educators struggle to coordinate multiple classrooms, students, and exam variants simultaneously.
+                  </div>
+                </div>
+              </div>
+              <div style="font-size: 11px; color: var(--text-muted); margin-top: 15px; font-weight: 500; font-family: var(--font-mono);">
+                ⚠️ Process Bottlenecks
+              </div>
+            </div>
+
+            <!-- Column 2: Our MVP Solution -->
+            <div class="glow-card" style="display: flex; flex-direction: column; justify-content: space-between; border-top: 4px solid var(--success); background: rgba(16, 185, 129, 0.02); padding: 20px 16px;">
+              <div>
+                <div class="card-title" style="color: var(--success); font-size: 16px; margin-bottom: 12px; font-weight: 700;">2. Our MVP Solution</div>
+                <div class="card-desc" style="display: flex; flex-direction: column; gap: 10px;">
+                  <div style="font-size: 13px; line-height: 1.4;">
+                    <strong style="color: white; display: block; margin-bottom: 2px;">• Integrated Exam & Rubric Maker</strong>
+                    Construct digital structures and marking rubrics directly inside the platform.
+                  </div>
+                  <div style="font-size: 13px; line-height: 1.4;">
+                    <strong style="color: white; display: block; margin-bottom: 2px;">• Centralized Classroom Dashboard</strong>
+                    Organize classes, track students, and manage assignment batches in one place.
+                  </div>
+                  <div style="font-size: 13px; line-height: 1.4;">
+                    <strong style="color: white; display: block; margin-bottom: 2px;">• AI-Assisted Assessment</strong>
+                    Automate paper evaluations based on student responses while keeping teachers in full control of final scores.
+                  </div>
+                </div>
+              </div>
+              <div style="font-size: 11px; color: var(--success); margin-top: 15px; font-weight: 500; font-family: var(--font-mono);">
+                ✨ Smart Automation
+              </div>
+            </div>
+
+            <!-- Column 3: Why This MVP Matters -->
+            <div class="glow-card" style="display: flex; flex-direction: column; justify-content: space-between; border-top: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.02); padding: 20px 16px;">
+              <div>
+                <div class="card-title" style="color: var(--secondary); font-size: 16px; margin-bottom: 12px; font-weight: 700;">3. Why This MVP Matters</div>
+                <div class="card-desc" style="display: flex; flex-direction: column; gap: 10px;">
+                  <div style="font-size: 13px; line-height: 1.4;">
+                    <strong style="color: white; display: block; margin-bottom: 2px;">• Time Recovery</strong>
+                    Slashes grading turnaround time, letting teachers focus on proactive student remediation.
+                  </div>
+                  <div style="font-size: 13px; line-height: 1.4;">
+                    <strong style="color: white; display: block; margin-bottom: 2px;">• Standardized Accuracy</strong>
+                    Removes grading biases and calculation mistakes to ensure rubric consistency.
+                  </div>
+                  <div style="font-size: 13px; line-height: 1.4;">
+                    <strong style="color: white; display: block; margin-bottom: 2px;">• Infinite Scalability</strong>
+                    Empowers individual tutors, tutoring centers, and schools to expand cohort sizes effortlessly.
+                  </div>
+                </div>
+              </div>
+              <div style="font-size: 11px; color: var(--secondary); margin-top: 15px; font-weight: 500; font-family: var(--font-mono);">
+                📈 Core Value Drivers
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>AI Intelligent Tech</span></div>
+          <span class="slide-number-display">3 / 14</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 4: TEACHER WORKFLOW OVERVIEW -->
+      <div class="slide" data-title="Teacher Workflow" data-tag="WORKFLOW OVERVIEW">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">Overview</span>
+        </div>
+        <div class="slide-title">Teacher Workflow in Scorify</div>
+        <div class="slide-subtitle">A complete 6-step pipeline from classroom setup to verified grading</div>
+        <div class="slide-body" style="justify-content: center; align-items: center;">
+          <div style="display: grid; grid-template-columns: 1fr auto 1fr auto 1fr; gap: 20px 15px; align-items: stretch; width: 85%; max-width: 920px; height: 80%; margin: auto;">
+            
+            <!-- Row 1: Setup & Early Config -->
+            <!-- Step 1 -->
+            <div class="glow-card" style="border-top: 3px solid var(--secondary); background: rgba(6, 182, 212, 0.02); padding: 15px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-size: 10px; font-weight: 700; color: var(--secondary); text-transform: uppercase; font-family: var(--font-mono); background: rgba(6, 182, 212, 0.1); padding: 2px 6px; border-radius: 4px;">Phase 1: Setup</span>
+                  <span style="font-size: 14px; font-weight: 800; color: rgba(255,255,255,0.15); font-family: var(--font-mono);">01</span>
+                </div>
+                <div style="font-size: 14px; font-weight: 700; color: white; margin-bottom: 6px;">Create Class</div>
+                <div style="font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
+                  Establish your digital learning space to organize assessments, templates, and student records.
+                </div>
+              </div>
+            </div>
+
+            <!-- Arrow 1 -> 2 -->
+            <div style="display: flex; align-items: center; justify-content: center; color: var(--text-muted); opacity: 0.35; width: 16px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="glow-card" style="border-top: 3px solid var(--secondary); background: rgba(6, 182, 212, 0.02); padding: 15px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-size: 10px; font-weight: 700; color: var(--secondary); text-transform: uppercase; font-family: var(--font-mono); background: rgba(6, 182, 212, 0.1); padding: 2px 6px; border-radius: 4px;">Phase 1: Setup</span>
+                  <span style="font-size: 14px; font-weight: 800; color: rgba(255,255,255,0.15); font-family: var(--font-mono);">02</span>
+                </div>
+                <div style="font-size: 14px; font-weight: 700; color: white; margin-bottom: 6px;">Import Students</div>
+                <div style="font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
+                  Populate your classroom roster quickly using easy import files or system integration.
+                </div>
+              </div>
+            </div>
+
+            <!-- Arrow 2 -> 3 -->
+            <div style="display: flex; align-items: center; justify-content: center; color: var(--text-muted); opacity: 0.35; width: 16px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="glow-card" style="border-top: 3px solid var(--primary); background: rgba(99, 102, 241, 0.02); padding: 15px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-size: 10px; font-weight: 700; color: var(--primary); text-transform: uppercase; font-family: var(--font-mono); background: rgba(99, 102, 241, 0.1); padding: 2px 6px; border-radius: 4px;">Phase 2: Configuration</span>
+                  <span style="font-size: 14px; font-weight: 800; color: rgba(255,255,255,0.15); font-family: var(--font-mono);">03</span>
+                </div>
+                <div style="font-size: 14px; font-weight: 700; color: white; margin-bottom: 6px;">Create Exam / Rubric</div>
+                <div style="font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
+                  Upload exam sheets along with corresponding grading rubrics or dynamic answer keys.
+                </div>
+              </div>
+            </div>
+
+            <!-- Row 2: Late Config & Grading -->
+            <!-- Step 4 -->
+            <div class="glow-card" style="border-top: 3px solid var(--primary); background: rgba(99, 102, 241, 0.02); padding: 15px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-size: 10px; font-weight: 700; color: var(--primary); text-transform: uppercase; font-family: var(--font-mono); background: rgba(99, 102, 241, 0.1); padding: 2px 6px; border-radius: 4px;">Phase 2: Configuration</span>
+                  <span style="font-size: 14px; font-weight: 800; color: rgba(255,255,255,0.15); font-family: var(--font-mono);">04</span>
+                </div>
+                <div style="font-size: 14px; font-weight: 700; color: white; margin-bottom: 6px;">Assign Exam</div>
+                <div style="font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
+                  Deploy exam criteria and assignments to specific class channels for student completion.
+                </div>
+              </div>
+            </div>
+
+            <!-- Arrow 4 -> 5 -->
+            <div style="display: flex; align-items: center; justify-content: center; color: var(--text-muted); opacity: 0.35; width: 16px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+
+            <!-- Step 5 -->
+            <div class="glow-card" style="border-top: 3px solid var(--accent); background: rgba(168, 85, 247, 0.02); padding: 15px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-size: 10px; font-weight: 700; color: var(--accent); text-transform: uppercase; font-family: var(--font-mono); background: rgba(168, 85, 247, 0.1); padding: 2px 6px; border-radius: 4px;">Phase 3: Grading</span>
+                  <span style="font-size: 14px; font-weight: 800; color: rgba(255,255,255,0.15); font-family: var(--font-mono);">05</span>
+                </div>
+                <div style="font-size: 14px; font-weight: 700; color: white; margin-bottom: 6px;">AI Bulk Grading</div>
+                <div style="font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
+                  Scorify OCR/ICR engine scans handwriting and automatically suggests draft scores.
+                </div>
+              </div>
+            </div>
+
+            <!-- Arrow 5 -> 6 -->
+            <div style="display: flex; align-items: center; justify-content: center; color: var(--text-muted); opacity: 0.35; width: 16px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="9 18 15 12 9 6"></polyline>
+              </svg>
+            </div>
+
+            <!-- Step 6 -->
+            <div class="glow-card" style="border-top: 3px solid var(--accent); background: rgba(168, 85, 247, 0.02); padding: 15px; display: flex; flex-direction: column; justify-content: space-between;">
+              <div>
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                  <span style="font-size: 10px; font-weight: 700; color: var(--accent); text-transform: uppercase; font-family: var(--font-mono); background: rgba(168, 85, 247, 0.1); padding: 2px 6px; border-radius: 4px;">Phase 3: Grading</span>
+                  <span style="font-size: 14px; font-weight: 800; color: rgba(255,255,255,0.15); font-family: var(--font-mono);">06</span>
+                </div>
+                <div style="font-size: 14px; font-weight: 700; color: white; margin-bottom: 6px;">Review & Approve</div>
+                <div style="font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
+                  Audit grading details, adjust points manually, add feedback, and finalize records.
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>Teacher Workflow</span></div>
+          <span class="slide-number-display">4 / 14</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 4.1: STEP 1 -->
+      <div class="slide" data-title="Step 1: Create Class" data-tag="WORKFLOW">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">Step 1 of 6</span>
+        </div>
+        <div class="slide-title">Step 1: Create Class</div>
+        <div class="slide-subtitle">Establish your digital learning space to organize assessments and students</div>
+        <div class="slide-body" style="justify-content: center; align-items: center;">
+          <div class="mock-browser" style="width: 100%; height: 480px;">
+            <div class="mock-header">
+              <div class="mock-dots" style="width: 42px;">
+                <div class="mock-dot red"></div>
+                <div class="mock-dot yellow"></div>
+                <div class="mock-dot green"></div>
+              </div>
+              <div class="mock-address">scorify.edtech/classrooms/create</div>
+              <div style="width: 42px;"></div>
+            </div>
+            <div class="mock-content" style="padding: 0; background: #0b0f19; display: flex; align-items: center; justify-content: center; flex-grow: 1; height: 0; overflow: hidden;">
+              <img src="images/Create_Class.png" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+            </div>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>Teacher Workflow</span></div>
+          <span class="slide-number-display">4 / 14</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 4.2: STEP 2 -->
+      <div class="slide" data-title="Step 2: Import Students" data-tag="WORKFLOW">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">Step 2 of 6</span>
+        </div>
+        <div class="slide-title">Step 2: Import Students</div>
+        <div class="slide-subtitle">Populate your classroom roster with easy import formats</div>
+        <div class="slide-body" style="justify-content: center; align-items: center;">
+          <div class="mock-browser" style="width: 100%; height: 480px;">
+            <div class="mock-header">
+              <div class="mock-dots" style="width: 42px;">
+                <div class="mock-dot red"></div>
+                <div class="mock-dot yellow"></div>
+                <div class="mock-dot green"></div>
+              </div>
+              <div class="mock-address">scorify.edtech/classrooms/import-students</div>
+              <div style="width: 42px;"></div>
+            </div>
+            <div class="mock-content" style="padding: 0; background: #0b0f19; display: flex; align-items: center; justify-content: center; flex-grow: 1; height: 0; overflow: hidden;">
+              <img src="images/Import_Students.png" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+            </div>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>Teacher Workflow</span></div>
+          <span class="slide-number-display">5 / 14</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 4.3: STEP 3 -->
+      <div class="slide" data-title="Step 3: Create Exam" data-tag="WORKFLOW">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">Step 3 of 6</span>
+        </div>
+        <div class="slide-title">Step 3: Create Exam</div>
+        <div class="slide-subtitle">Define exam specifications and upload the grading rubric</div>
+        <div class="slide-body" style="justify-content: center; align-items: center;">
+          <div class="mock-browser" style="width: 100%; height: 480px;">
+            <div class="mock-header">
+              <div class="mock-dots" style="width: 42px;">
+                <div class="mock-dot red"></div>
+                <div class="mock-dot yellow"></div>
+                <div class="mock-dot green"></div>
+              </div>
+              <div class="mock-address">scorify.edtech/exams/create</div>
+              <div style="width: 42px;"></div>
+            </div>
+            <div class="mock-content" style="padding: 0; background: #0b0f19; display: flex; align-items: center; justify-content: center; flex-grow: 1; height: 0; overflow: hidden;">
+              <img src="images/Create_Exam.png" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+            </div>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>Teacher Workflow</span></div>
+          <span class="slide-number-display">6 / 14</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 4.4: STEP 4 -->
+      <div class="slide" data-title="Step 4: Assign Exam" data-tag="WORKFLOW">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">Step 4 of 6</span>
+        </div>
+        <div class="slide-title">Step 4: Assign Exam</div>
+        <div class="slide-subtitle">Deploy the exam configuration to the selected classroom</div>
+        <div class="slide-body" style="justify-content: center; align-items: center;">
+          <div class="mock-browser" style="width: 100%; height: 480px;">
+            <div class="mock-header">
+              <div class="mock-dots" style="width: 42px;">
+                <div class="mock-dot red"></div>
+                <div class="mock-dot yellow"></div>
+                <div class="mock-dot green"></div>
+              </div>
+              <div class="mock-address">scorify.edtech/exams/assign</div>
+              <div style="width: 42px;"></div>
+            </div>
+            <div class="mock-content" style="padding: 0; background: #0b0f19; display: flex; align-items: center; justify-content: center; flex-grow: 1; height: 0; overflow: hidden;">
+              <img src="images/Assign_Classroom.png" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+            </div>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>Teacher Workflow</span></div>
+          <span class="slide-number-display">7 / 14</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 4.5.1: STEP 5.1 (BEFORE GRADING) -->
+      <div class="slide" data-title="Step 5.1: Upload Scans" data-tag="WORKFLOW">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">Step 5.1 of 6</span>
+        </div>
+        <div class="slide-title">Step 5.1: AI Bulk Grading (Upload Scans)</div>
+        <div class="slide-subtitle">Upload scanned student exam sheets to initiate batch processing</div>
+        <div class="slide-body" style="justify-content: center; align-items: center;">
+          <div class="mock-browser" style="width: 100%; height: 480px;">
+            <div class="mock-header">
+              <div class="mock-dots" style="width: 42px;">
+                <div class="mock-dot red"></div>
+                <div class="mock-dot yellow"></div>
+                <div class="mock-dot green"></div>
+              </div>
+              <div class="mock-address">scorify.edtech/exams/bulk-grading</div>
+              <div style="width: 42px;"></div>
+            </div>
+            <div class="mock-content" style="padding: 0; background: #0b0f19; display: flex; align-items: center; justify-content: center; flex-grow: 1; height: 0; overflow: hidden;">
+              <img src="images/Bulking_Grading_01.png" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+            </div>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>Teacher Workflow</span></div>
+          <span class="slide-number-display">8 / 14</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 4.5.2: STEP 5.2 (PROCESSING) -->
+      <div class="slide" data-title="Step 5.2: Processing" data-tag="WORKFLOW">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">Step 5.2 of 6</span>
+        </div>
+        <div class="slide-title">Step 5.2: AI Bulk Grading (Processing)</div>
+        <div class="slide-subtitle">Multi-modal OCR engine scans and analyzes handwriting structures in the background</div>
+        <div class="slide-body" style="justify-content: center; align-items: center;">
+          <div class="mock-browser" style="width: 100%; height: 480px;">
+            <div class="mock-header">
+              <div class="mock-dots" style="width: 42px;">
+                <div class="mock-dot red"></div>
+                <div class="mock-dot yellow"></div>
+                <div class="mock-dot green"></div>
+              </div>
+              <div class="mock-address">scorify.edtech/exams/bulk-grading/processing</div>
+              <div style="width: 42px;"></div>
+            </div>
+            <div class="mock-content" style="padding: 0; background: #0b0f19; display: flex; align-items: center; justify-content: center; flex-grow: 1; height: 0; overflow: hidden;">
+              <img src="images/Bulking_Grading_Processing.png" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+            </div>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>Teacher Workflow</span></div>
+          <span class="slide-number-display">8 / 14</span>
+        </div>
+      </div>
+
+
+
+
+      <!-- SLIDE 4.6: STEP 6 -->
+      <div class="slide" data-title="Step 6: Review & Approve" data-tag="WORKFLOW">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">Step 6 of 6</span>
+        </div>
+        <div class="slide-title">Step 6: Review & Approve</div>
+        <div class="slide-subtitle">Retain complete pedagogical authority with teacher-in-the-loop validation</div>
+        <div class="slide-body" style="justify-content: center; align-items: center;">
+          <div class="mock-browser" style="width: 100%; height: 480px;">
+            <div class="mock-header">
+              <div class="mock-dots" style="width: 42px;">
+                <div class="mock-dot red"></div>
+                <div class="mock-dot yellow"></div>
+                <div class="mock-dot green"></div>
+              </div>
+              <div class="mock-address">scorify.edtech/exams/review</div>
+              <div style="width: 42px;"></div>
+            </div>
+            <div class="mock-content" style="padding: 0; background: #0b0f19; display: flex; align-items: center; justify-content: center; flex-grow: 1; height: 0; overflow: hidden;">
+              <img src="images/Bulking_Grading_Processed.png" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+            </div>
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>Teacher Workflow</span></div>
+          <span class="slide-number-display">9 / 14</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 5.1: TEACHER DASHBOARD -->
+      <div class="slide" data-title="Teacher Dashboard" data-tag="PRODUCT">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">TEACHER DASHBOARD</span>
+        </div>
+        <div class="slide-title">Centralized Teacher Dashboard</div>
+        <div class="slide-subtitle">A macro control center to monitor class performance and grading progress</div>
+        <div class="slide-body" style="flex-direction: column; justify-content: space-between; gap: 15px;">
+          <!-- Top Row -->
+          <div style="display: flex; width: 100%; gap: 24px; flex-grow: 1; align-items: center; height: 0;">
+            <!-- Left Col (Image) -->
+            <div style="flex: 1.2; height: 100%; display: flex; align-items: center;">
+              <div class="mock-browser" style="width: 100%; height: 100%;">
+                <div class="mock-header">
+                  <div class="mock-dots" style="width: 42px;">
+                    <div class="mock-dot red"></div>
+                    <div class="mock-dot yellow"></div>
+                    <div class="mock-dot green"></div>
+                  </div>
+                  <div class="mock-address">scorify.edtech/teacher/dashboard</div>
+                  <div style="width: 42px;"></div>
+                </div>
+                <div class="mock-content" style="padding: 0; background: #0b0f19; display: flex; align-items: center; justify-content: center; flex-grow: 1; height: 0; overflow: hidden;">
+                  <img src="images/Teacher_Dashboard_View.png" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Right Col (Text) -->
+            <div style="flex: 0.8; display: flex; flex-direction: column; gap: 8px; justify-content: space-between; height: 100%;">
+              
+              <!-- Panel 1: Overview of Active Classes -->
+              <div class="glow-card" style="padding: 10px 14px; border-left: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 13px; font-weight: 700; color: var(--secondary); margin-bottom: 2px;">Active Classes Overview</div>
+                <div style="font-size: 11px; color: var(--text-muted); line-height: 1.35;">
+                  Monitor student performance levels and course statistics in one glance.
+                </div>
+              </div>
+
+              <!-- Panel 2: AI Grading Statistics -->
+              <div class="glow-card" style="padding: 10px 14px; border-left: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 13px; font-weight: 700; color: var(--secondary); margin-bottom: 2px;">AI Grading Statistics</div>
+                <div style="font-size: 11px; color: var(--text-muted); line-height: 1.35;">
+                  Track total exams assigned and successfully evaluated papers at a macro scale.
+                </div>
+              </div>
+
+              <!-- Panel 3: Recent Activity Feed -->
+              <div class="glow-card" style="padding: 10px 14px; border-left: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 13px; font-weight: 700; color: var(--secondary); margin-bottom: 2px;">Recent Activity Feed</div>
+                <div style="font-size: 11px; color: var(--text-muted); line-height: 1.35;">
+                  Real-time activity logs detailing classroom submissions, reviews, and overrides.
+                </div>
+              </div>
+
+              <!-- Panel 4: AI Processing Log -->
+              <div class="glow-card" style="padding: 10px 14px; border-left: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 13px; font-weight: 700; color: var(--secondary); margin-bottom: 2px;">AI Processing Log</div>
+                <div style="font-size: 11px; color: var(--text-muted); line-height: 1.35;">
+                  Live processing monitors to track background paper analysis and grade scoring states.
+                </div>
+              </div>
+
+            </div>
+          </div>
+          
+          <!-- Bottom Tagline -->
+          <div style="width: 100%; text-align: center; font-size: 13px; color: var(--secondary); font-style: italic; background: rgba(6, 182, 212, 0.03); border: 1px solid rgba(6, 182, 212, 0.1); padding: 8px; border-radius: 6px; font-weight: 500;">
+            💡 Scorify provides teachers with a centralized workspace for monitoring classes, assignments, and grading progress.
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>Teacher Dashboard</span></div>
+          <span class="slide-number-display">5 / 14</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 5.2: EXAM MANAGEMENT -->
+      <div class="slide" data-title="Exam Management" data-tag="PRODUCT">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">EXAM MANAGEMENT</span>
+        </div>
+        <div class="slide-title">Exam & Assignment Management</div>
+        <div class="slide-subtitle">Track, filter, and organize academic assessments in one place</div>
+        <div class="slide-body" style="flex-direction: column; justify-content: space-between; gap: 15px;">
+          <!-- Top Row -->
+          <div style="display: flex; width: 100%; gap: 24px; flex-grow: 1; align-items: center; height: 0;">
+            <!-- Left Col (Image) -->
+            <div style="flex: 1.2; height: 100%; display: flex; align-items: center;">
+              <div class="mock-browser" style="width: 100%; height: 100%;">
+                <div class="mock-header">
+                  <div class="mock-dots" style="width: 42px;">
+                    <div class="mock-dot red"></div>
+                    <div class="mock-dot yellow"></div>
+                    <div class="mock-dot green"></div>
+                  </div>
+                  <div class="mock-address">scorify.edtech/teacher/assignments</div>
+                  <div style="width: 42px;"></div>
+                </div>
+                <div class="mock-content" style="padding: 0; background: #0b0f19; display: flex; align-items: center; justify-content: center; flex-grow: 1; height: 0; overflow: hidden;">
+                  <img src="images/Exam_management.png" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Right Col (Text) -->
+            <div style="flex: 0.8; display: flex; flex-direction: column; gap: 8px; justify-content: space-between; height: 100%;">
+              
+              <!-- Panel 1: Unified Assessment List -->
+              <div class="glow-card" style="padding: 10px 14px; border-left: 4px solid var(--primary); background: rgba(99, 102, 241, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 2px;">Unified Assessment List</div>
+                <div style="font-size: 11px; color: var(--text-muted); line-height: 1.35;">
+                  View all active examinations, assignments, and quizzes across multiple classes.
+                </div>
+              </div>
+
+              <!-- Panel 2: Status Tracking -->
+              <div class="glow-card" style="padding: 10px 14px; border-left: 4px solid var(--primary); background: rgba(99, 102, 241, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 2px;">Real-Time Status Tracking</div>
+                <div style="font-size: 11px; color: var(--text-muted); line-height: 1.35;">
+                  Instantly filter assessments by pending, in-progress, or finalized/approved grading states.
+                </div>
+              </div>
+
+              <!-- Panel 3: Quick Asset Access -->
+              <div class="glow-card" style="padding: 10px 14px; border-left: 4px solid var(--primary); background: rgba(99, 102, 241, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 2px;">Quick Asset Access</div>
+                <div style="font-size: 11px; color: var(--text-muted); line-height: 1.35;">
+                  Access templates, student printouts, master exam PDFs, and digitized rubrics in one click.
+                </div>
+              </div>
+
+              <!-- Panel 4: Assessment Organization -->
+              <div class="glow-card" style="padding: 10px 14px; border-left: 4px solid var(--primary); background: rgba(99, 102, 241, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 13px; font-weight: 700; color: var(--primary); margin-bottom: 2px;">Assessment Organization</div>
+                <div style="font-size: 11px; color: var(--text-muted); line-height: 1.35;">
+                  Structure multiple evaluations, exam variants, and assignment cohorts smoothly.
+                </div>
+              </div>
+
+            </div>
+          </div>
+          
+          <!-- Bottom Tagline -->
+          <div style="width: 100%; text-align: center; font-size: 13px; color: var(--primary); font-style: italic; background: rgba(99, 102, 241, 0.03); border: 1px solid rgba(99, 102, 241, 0.1); padding: 8px; border-radius: 6px; font-weight: 500;">
+            💡 Scorify provides teachers with a centralized workspace for monitoring classes, assignments, and grading progress.
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>Centralized Workspace</span></div>
+          <span class="slide-number-display">5 / 14</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 5.3: SAMPLE EXAM PAPER -->
+      <div class="slide" data-title="Sample Exam Paper" data-tag="PRODUCT">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">SAMPLE EXAM</span>
+        </div>
+        <div class="slide-title">Sample Student Exam Paper</div>
+        <div class="slide-subtitle">Clean, structured exam sheets designed for high-accuracy handwriting recognition</div>
+        <div class="slide-body" style="flex-direction: column; justify-content: space-between; gap: 15px;">
+          <!-- Top Row -->
+          <div style="display: flex; width: 100%; gap: 24px; flex-grow: 1; align-items: center; height: 0;">
+            <!-- Left Col (Image) -->
+            <div style="flex: 1.2; height: 100%; display: flex; align-items: center;">
+              <div class="mock-browser" style="width: 100%; height: 100%;">
+                <div class="mock-header">
+                  <div class="mock-dots" style="width: 42px;">
+                    <div class="mock-dot red"></div>
+                    <div class="mock-dot yellow"></div>
+                    <div class="mock-dot green"></div>
+                  </div>
+                  <div class="mock-address">scorify.edtech/samples/exam-paper</div>
+                  <div style="width: 42px;"></div>
+                </div>
+                <div class="mock-content" style="padding: 0; background: #0b0f19; display: flex; align-items: center; justify-content: center; flex-grow: 1; height: 0; overflow: hidden;">
+                  <img src="images/Sample_Exam.png" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Right Col (Text) -->
+            <div style="flex: 0.8; display: flex; flex-direction: column; gap: 10px; justify-content: space-between; height: 100%;">
+              
+              <!-- Panel 1: Structured Layout -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--secondary); margin-bottom: 4px;">01. Structured Layout</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  Standardized boxes for student details and clean response grids for mathematical answers.
+                </div>
+              </div>
+
+              <!-- Panel 2: Machine-Readable Anchors -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--secondary); margin-bottom: 4px;">02. Machine-Readable Anchors</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  Alignment markers that help the AI deskew and calibrate pages perfectly for OCR scanning.
+                </div>
+              </div>
+
+              <!-- Panel 3: Handwritten Input Areas -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--secondary); margin-bottom: 4px;">03. Handwritten Input Areas</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  Designated fields optimized for scanning handwritten text, calculations, and mathematical formulas.
+                </div>
+              </div>
+
+            </div>
+          </div>
+          
+          <!-- Bottom Tagline -->
+          <div style="width: 100%; text-align: center; font-size: 13px; color: var(--secondary); font-style: italic; background: rgba(6, 182, 212, 0.03); border: 1px solid rgba(6, 182, 212, 0.1); padding: 8px; border-radius: 6px; font-weight: 500;">
+            “A well-formatted exam sheet ensures that the multi-modal OCR engine achieves up to 98% accuracy in parsing handwritten answers.”
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>Sample Exam</span></div>
+          <span class="slide-number-display">5 / 14</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 5.4: SAMPLE GRADING RUBRIC -->
+      <div class="slide" data-title="Sample Rubrics" data-tag="PRODUCT">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">SAMPLE RUBRIC</span>
+        </div>
+        <div class="slide-title">Sample Grading Rubric</div>
+        <div class="slide-subtitle">Digitized marking criteria to guide AI-assisted evaluations</div>
+        <div class="slide-body" style="flex-direction: column; justify-content: space-between; gap: 15px;">
+          <!-- Top Row -->
+          <div style="display: flex; width: 100%; gap: 24px; flex-grow: 1; align-items: center; height: 0;">
+            <!-- Left Col (Image) -->
+            <div style="flex: 1.2; height: 100%; display: flex; align-items: center;">
+              <div class="mock-browser" style="width: 100%; height: 100%;">
+                <div class="mock-header">
+                  <div class="mock-dots" style="width: 42px;">
+                    <div class="mock-dot red"></div>
+                    <div class="mock-dot yellow"></div>
+                    <div class="mock-dot green"></div>
+                  </div>
+                  <div class="mock-address">scorify.edtech/samples/rubric</div>
+                  <div style="width: 42px;"></div>
+                </div>
+                <div class="mock-content" style="padding: 0; background: #0b0f19; display: flex; align-items: center; justify-content: center; flex-grow: 1; height: 0; overflow: hidden;">
+                  <img src="images/Sample_Rubrics.png" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Right Col (Text) -->
+            <div style="flex: 0.8; display: flex; flex-direction: column; gap: 10px; justify-content: space-between; height: 100%;">
+              
+              <!-- Panel 1: Granular Scoring Criteria -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--primary); background: rgba(99, 102, 241, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">01. Granular Scoring Criteria</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  Clear point breakdowns defined for each step of a question, enabling custom partial credits.
+                </div>
+              </div>
+
+              <!-- Panel 2: Step-by-Step Logic -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--primary); background: rgba(99, 102, 241, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">02. Step-by-Step Logic</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  Defined computational or conceptual milestones that the Scorify AI cross-references.
+                </div>
+              </div>
+
+              <!-- Panel 3: Standardized Scoring Model -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--primary); background: rgba(99, 102, 241, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">03. Standardized Scoring Model</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  Replaces subjective grading variations with absolute, digitized mathematical rule structures.
+                </div>
+              </div>
+
+            </div>
+          </div>
+          
+          <!-- Bottom Tagline -->
+          <div style="width: 100%; text-align: center; font-size: 13px; color: var(--primary); font-style: italic; background: rgba(99, 102, 241, 0.03); border: 1px solid rgba(99, 102, 241, 0.1); padding: 8px; border-radius: 6px; font-weight: 500;">
+            “Scorify maps students' handwritten work directly to these rubric rules to propose accurate, step-by-step partial grades.”
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>Sample Rubric</span></div>
+          <span class="slide-number-display">5 / 14</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 6: CREATE EXAM & RUBRIC SETUP -->
+      <div class="slide" data-title="Create Exam & Rubric" data-tag="PRODUCT">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">EXAM SETUP</span>
+        </div>
+        <div class="slide-title">Create Exam & Rubric Setup</div>
+        <div class="slide-subtitle">Establish the evaluation foundation with question sheets and marking rubrics</div>
+        <div class="slide-body" style="flex-direction: column; justify-content: space-between; gap: 15px;">
+          <!-- Top Row -->
+          <div style="display: flex; width: 100%; gap: 24px; flex-grow: 1; align-items: center; height: 0;">
+            <!-- Left Col (Image) -->
+            <div style="flex: 1.2; height: 100%; display: flex; align-items: center;">
+              <div class="mock-browser" style="width: 100%; height: 100%;">
+                <div class="mock-header">
+                  <div class="mock-dots" style="width: 42px;">
+                    <div class="mock-dot red"></div>
+                    <div class="mock-dot yellow"></div>
+                    <div class="mock-dot green"></div>
+                  </div>
+                  <div class="mock-address">scorify.edtech/exams/create</div>
+                  <div style="width: 42px;"></div>
+                </div>
+                <div class="mock-content" style="padding: 0; background: #0b0f19; display: flex; align-items: center; justify-content: center; flex-grow: 1; height: 0; overflow: hidden;">
+                  <img src="images/Create_Exam.png" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Right Col (Text) -->
+            <div style="flex: 0.8; display: flex; flex-direction: column; gap: 10px; justify-content: space-between; height: 100%;">
+              
+              <!-- Panel 1: Exam Setup -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--accent); background: rgba(168, 85, 247, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 4px;">01. Exam Setup</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  Teacher enters the exam / assignment name and assigns it to a target classroom registry.
+                </div>
+              </div>
+
+              <!-- Panel 2: Upload Inputs for AI -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--accent); background: rgba(168, 85, 247, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 4px;">02. Upload Inputs for AI</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  The teacher uploads both the official exam paper PDF and the corresponding grading rubric / answer key PDF.
+                </div>
+              </div>
+
+              <!-- Panel 3: AI Preparation -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--accent); background: rgba(168, 85, 247, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--accent); margin-bottom: 4px;">03. AI Preparation</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  Scorify processes the provided files to analyze the marking logic structure and prepare the background AI grading workflow.
+                </div>
+              </div>
+
+            </div>
+          </div>
+          
+          <!-- Bottom Tagline -->
+          <div style="width: 100%; text-align: center; font-size: 13px; color: var(--accent); font-style: italic; background: rgba(168, 85, 247, 0.03); border: 1px solid rgba(168, 85, 247, 0.1); padding: 8px; border-radius: 6px; font-weight: 500;">
+            “Scorify does not replace the teacher’s grading logic. Instead, it uses the teacher’s own rubric and answer structure as the foundation for AI-assisted evaluation.”
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>Exam Setup</span></div>
+          <span class="slide-number-display">6 / 14</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 5.5: STUDENT MANAGEMENT -->
+      <div class="slide" data-title="Student Management" data-tag="PRODUCT">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">STUDENT ROSTER</span>
+        </div>
+        <div class="slide-title">Classroom & Student Management</div>
+        <div class="slide-subtitle">Manage learning environments, student profiles, and roster structures</div>
+        <div class="slide-body" style="flex-direction: column; justify-content: space-between; gap: 15px;">
+          <!-- Top Row -->
+          <div style="display: flex; width: 100%; gap: 24px; flex-grow: 1; align-items: center; height: 0;">
+            <!-- Left Col (Image) -->
+            <div style="flex: 1.2; height: 100%; display: flex; align-items: center;">
+              <div class="mock-browser" style="width: 100%; height: 100%;">
+                <div class="mock-header">
+                  <div class="mock-dots" style="width: 42px;">
+                    <div class="mock-dot red"></div>
+                    <div class="mock-dot yellow"></div>
+                    <div class="mock-dot green"></div>
+                  </div>
+                  <div class="mock-address">scorify.edtech/classrooms/students</div>
+                  <div style="width: 42px;"></div>
+                </div>
+                <div class="mock-content" style="padding: 0; background: #0b0f19; display: flex; align-items: center; justify-content: center; flex-grow: 1; height: 0; overflow: hidden;">
+                  <img src="images/Student_Management.png" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Right Col (Text) -->
+            <div style="flex: 0.8; display: flex; flex-direction: column; gap: 10px; justify-content: space-between; height: 100%;">
+              
+              <!-- Panel 1: Roster Access -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--secondary); margin-bottom: 4px;">Student Roster View</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  Access student registers inside each specific classroom, listing complete enrollment records.
+                </div>
+              </div>
+
+              <!-- Panel 2: Connection Tracking -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--secondary); margin-bottom: 4px;">Participation Monitoring</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  Track student activity logs, enrollment dates, and individual assessment history.
+                </div>
+              </div>
+
+              <!-- Panel 3: Structured Grouping -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--secondary); margin-bottom: 4px;">Grading Organization</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  Maintains a clean framework to connect handwritten test papers directly to registered student IDs.
+                </div>
+              </div>
+
+            </div>
+          </div>
+          
+          <!-- Bottom Tagline -->
+          <div style="width: 100%; text-align: center; font-size: 13px; color: var(--secondary); font-style: italic; background: rgba(6, 182, 212, 0.03); border: 1px solid rgba(6, 182, 212, 0.1); padding: 8px; border-radius: 6px; font-weight: 500;">
+            “This classroom roster is crucial because grading is not just about one paper — it is tied to real students and their ongoing assessment history.”
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>Student Management</span></div>
+          <span class="slide-number-display">5 / 14</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 5.6: ASSIGNED EXAM MANAGEMENT -->
+      <div class="slide" data-title="Assigned Exams" data-tag="PRODUCT">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">ASSIGNED EXAMS</span>
+        </div>
+        <div class="slide-title">Assigned Exam Management</div>
+        <div class="slide-subtitle">Track exercises, quizzes, and exams dispatched to classrooms</div>
+        <div class="slide-body" style="flex-direction: column; justify-content: space-between; gap: 15px;">
+          <!-- Top Row -->
+          <div style="display: flex; width: 100%; gap: 24px; flex-grow: 1; align-items: center; height: 0;">
+            <!-- Left Col (Image) -->
+            <div style="flex: 1.2; height: 100%; display: flex; align-items: center;">
+              <div class="mock-browser" style="width: 100%; height: 100%;">
+                <div class="mock-header">
+                  <div class="mock-dots" style="width: 42px;">
+                    <div class="mock-dot red"></div>
+                    <div class="mock-dot yellow"></div>
+                    <div class="mock-dot green"></div>
+                  </div>
+                  <div class="mock-address">scorify.edtech/classrooms/exams</div>
+                  <div style="width: 42px;"></div>
+                </div>
+                <div class="mock-content" style="padding: 0; background: #0b0f19; display: flex; align-items: center; justify-content: center; flex-grow: 1; height: 0; overflow: hidden;">
+                  <img src="images/Assigned_Exam_Class.png" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Right Col (Text) -->
+            <div style="flex: 0.8; display: flex; flex-direction: column; gap: 10px; justify-content: space-between; height: 100%;">
+              
+              <!-- Panel 1: Exam Lists -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--primary); background: rgba(99, 102, 241, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">Assigned Assessments</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  Display active and past assessments, exams, or homework assignments assigned specifically to this classroom registry.
+                </div>
+              </div>
+
+              <!-- Panel 2: Progress Metrics -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--primary); background: rgba(99, 102, 241, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">Grading Status Tracking</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  Quickly check evaluation status, submission count, and grading progression metrics per active exam assignment.
+                </div>
+              </div>
+
+              <!-- Panel 3: Quick Action hub -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--primary); background: rgba(99, 102, 241, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--primary); margin-bottom: 4px;">Assessment hub</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  Conveniently trigger bulk upload workflows, download blank exam sheets, or edit active grading rubrics directly.
+                </div>
+              </div>
+
+            </div>
+          </div>
+          
+          <!-- Bottom Tagline -->
+          <div style="width: 100%; text-align: center; font-size: 13px; color: var(--primary); font-style: italic; background: rgba(99, 102, 241, 0.03); border: 1px solid rgba(99, 102, 241, 0.1); padding: 8px; border-radius: 6px; font-weight: 500;">
+            “This assessment log provides an immediate overview of class workloads and ensures that teacher actions are context-aware.”
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>Assigned Exams</span></div>
+          <span class="slide-number-display">5 / 14</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 5.7: AI GRADING WORKFLOW -->
+      <div class="slide" data-title="AI Grading Workflow" data-tag="PRODUCT">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">AI GRADING</span>
+        </div>
+        <div class="slide-title">AI Grading Workflow at the Assignment Level</div>
+        <div class="slide-subtitle">The operational core linking student answer papers, rubrics, and grades</div>
+        <div class="slide-body" style="flex-direction: column; justify-content: space-between; gap: 15px;">
+          <!-- Top Row -->
+          <div style="display: flex; width: 100%; gap: 24px; flex-grow: 1; align-items: center; height: 0;">
+            <!-- Left Col (Image) -->
+            <div style="flex: 1.2; height: 100%; display: flex; align-items: center;">
+              <div class="mock-browser" style="width: 100%; height: 100%;">
+                <div class="mock-header">
+                  <div class="mock-dots" style="width: 42px;">
+                    <div class="mock-dot red"></div>
+                    <div class="mock-dot yellow"></div>
+                    <div class="mock-dot green"></div>
+                  </div>
+                  <div class="mock-address">scorify.edtech/assignments/grading-dashboard</div>
+                  <div style="width: 42px;"></div>
+                </div>
+                <div class="mock-content" style="padding: 0; background: #0b0f19; display: flex; align-items: center; justify-content: center; flex-grow: 1; height: 0; overflow: hidden;">
+                  <img src="images/Bulking_Grading_01.png" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Right Col (Text/Panels) -->
+            <div style="flex: 0.8; display: flex; flex-direction: column; gap: 8px; justify-content: space-between; height: 100%;">
+              
+              <!-- Panel 1: Assignment Selection -->
+              <div class="glow-card" style="padding: 10px 14px; border-left: 4px solid var(--accent); background: rgba(168, 85, 247, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 2px;">01. Assignment Selection</div>
+                <div style="font-size: 11px; color: var(--text-muted); line-height: 1.35;">
+                  The teacher opens a specific assignment or exam session from the active classroom registry.
+                </div>
+              </div>
+
+              <!-- Panel 2: Side-by-Side Reference -->
+              <div class="glow-card" style="padding: 10px 14px; border-left: 4px solid var(--accent); background: rgba(168, 85, 247, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 2px;">02. Side-by-Side Reference</div>
+                <div style="font-size: 11px; color: var(--text-muted); line-height: 1.35;">
+                  Scorify displays the question sheet and the grading rubric structure side-by-side.
+                </div>
+              </div>
+
+              <!-- Panel 3: Submission Registry -->
+              <div class="glow-card" style="padding: 10px 14px; border-left: 4px solid var(--accent); background: rgba(168, 85, 247, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 2px;">03. Submission Registry</div>
+                <div style="font-size: 11px; color: var(--text-muted); line-height: 1.35;">
+                  Student submissions are listed alongside grading statuses and assigned evaluation scores.
+                </div>
+              </div>
+
+              <!-- Panel 4: Bulk AI Grading -->
+              <div class="glow-card" style="padding: 10px 14px; border-left: 4px solid var(--accent); background: rgba(168, 85, 247, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 13px; font-weight: 700; color: var(--accent); margin-bottom: 2px;">04. Bulk AI Grading</div>
+                <div style="font-size: 11px; color: var(--text-muted); line-height: 1.35;">
+                  The teacher can trigger automated bulk AI grading to process multiple paper packets in parallel.
+                </div>
+              </div>
+
+            </div>
+          </div>
+          
+          <!-- Bottom Tagline -->
+          <div style="width: 100%; text-align: center; font-size: 13px; color: var(--accent); font-style: italic; background: rgba(168, 85, 247, 0.03); border: 1px solid rgba(168, 85, 247, 0.1); padding: 8px; border-radius: 6px; font-weight: 500;">
+            “This is the operational center of the grading session, where the teacher can monitor what has been graded, what remains pending, and which submissions need review.”
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>AI Grading Workflow</span></div>
+          <span class="slide-number-display">5 / 14</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 5.8: DETAILED AI ANALYSIS & TEACHER APPROVAL -->
+      <div class="slide" data-title="AI Analysis & Approval" data-tag="PRODUCT">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">AI ANALYSIS</span>
+        </div>
+        <div class="slide-title">Detailed AI Analysis</div>
+        <div class="slide-subtitle">Granular evaluation breakdown where the teacher retains complete pedagogical control</div>
+        <div class="slide-body" style="flex-direction: column; justify-content: space-between; gap: 15px;">
+          <!-- Top Row -->
+          <div style="display: flex; width: 100%; gap: 24px; flex-grow: 1; align-items: center; height: 0;">
+            <!-- Left Col (Image - 45% width) -->
+            <div style="flex: 0.9; height: 100%; display: flex; align-items: center;">
+              <div class="mock-browser" style="width: 100%; height: 100%;">
+                <div class="mock-header">
+                  <div class="mock-dots" style="width: 42px;">
+                    <div class="mock-dot red"></div>
+                    <div class="mock-dot yellow"></div>
+                    <div class="mock-dot green"></div>
+                  </div>
+                  <div class="mock-address">scorify.edtech/assignments/review-submission</div>
+                  <div style="width: 42px;"></div>
+                </div>
+                <div class="mock-content" style="padding: 0; background: #0b0f19; display: flex; align-items: center; justify-content: center; flex-grow: 1; height: 0; overflow: hidden;">
+                  <img src="images/detail_analysis.png" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Right Col (Text - 55% width) -->
+            <div style="flex: 1.1; display: flex; flex-direction: column; gap: 10px; justify-content: space-between; height: 100%;">
+              
+              <!-- Panel 1: Submission View -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--secondary); margin-bottom: 4px;">01. Submission View</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  The teacher can inspect the scanned student exam sheet directly alongside AI marks on the platform.
+                </div>
+              </div>
+
+              <!-- Panel 2: AI Step-by-Step Analysis -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--secondary); margin-bottom: 4px;">02. AI Step-by-Step Analysis</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  Scorify parses handwritings step-by-step and maps steps to rubrics to propose partial points automatically.
+                </div>
+              </div>
+
+              <!-- Panel 3: Teacher Control -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--secondary); margin-bottom: 4px;">03. Teacher Control & Adjustments</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  Teachers retain complete authority to manually adjust scores, override partial markings, and click to approve.
+                </div>
+              </div>
+
+            </div>
+          </div>
+          
+          <!-- Bottom Tagline -->
+          <div style="width: 100%; text-align: center; font-size: 13px; color: var(--secondary); font-style: italic; background: rgba(6, 182, 212, 0.03); border: 1px solid rgba(6, 182, 212, 0.1); padding: 8px; border-radius: 6px; font-weight: 500;">
+            “Scorify is designed as an AI assistant, not an automatic replacement for the teacher. The final grading authority remains with the teacher through review, adjustment, and approval.”
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>AI Analysis & Review</span></div>
+          <span class="slide-number-display">5 / 14</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 5.9: MONETIZATION & SUBSCRIPTION MODEL -->
+      <div class="slide" data-title="Monetization" data-tag="BUSINESS MODEL">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">PRICING PLANS</span>
+        </div>
+        <div class="slide-title">Subscription Model</div>
+        <div class="slide-subtitle">A sustainable growth structure transforming our MVP into an edtech product scale</div>
+        <div class="slide-body" style="flex-direction: column; justify-content: space-between; gap: 15px;">
+          <!-- Top Row -->
+          <div style="display: flex; width: 100%; gap: 24px; flex-grow: 1; align-items: center; height: 0;">
+            <!-- Left Col (Image) -->
+            <div style="flex: 1.2; height: 100%; display: flex; align-items: center;">
+              <div class="mock-browser" style="width: 100%; height: 100%;">
+                <div class="mock-header">
+                  <div class="mock-dots" style="width: 42px;">
+                    <div class="mock-dot red"></div>
+                    <div class="mock-dot yellow"></div>
+                    <div class="mock-dot green"></div>
+                  </div>
+                  <div class="mock-address">scorify.edtech/pricing</div>
+                  <div style="width: 42px;"></div>
+                </div>
+                <div class="mock-content" style="padding: 0; background: #0b0f19; display: flex; align-items: center; justify-content: center; flex-grow: 1; height: 0; overflow: hidden;">
+                  <img src="images/subscription_models.png" style="max-width: 100%; max-height: 100%; object-fit: contain;">
+                </div>
+              </div>
+            </div>
+            
+            <!-- Right Col (Text) -->
+            <div style="flex: 0.8; display: flex; flex-direction: column; gap: 10px; justify-content: space-between; height: 100%;">
+              
+              <!-- Panel 1: 1-Month Plan -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--secondary); margin-bottom: 4px;">1-Month Plan (149,000 VND)</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  Unlocks core hand-written OCR grading features with up to <strong>50 MB</strong> max file sizes and a cap of <strong>75 AI graded papers</strong> per month.
+                </div>
+              </div>
+
+              <!-- Panel 2: 3-Month Plan -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--secondary); margin-bottom: 4px;">3-Month Plan (297,000 VND) - Popular</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  Our popular mid-term option with <strong>50 MB</strong> file capacity and expanded capacity of <strong>125 AI graded papers</strong> per month.
+                </div>
+              </div>
+
+              <!-- Panel 3: 12-Month Plan -->
+              <div class="glow-card" style="padding: 12px 16px; border-left: 4px solid var(--secondary); background: rgba(6, 182, 212, 0.015); display: flex; flex-direction: column; justify-content: center; flex: 1;">
+                <div style="font-size: 14px; font-weight: 700; color: var(--secondary); margin-bottom: 4px;">12-Month Plan (828,000 VND) - Best Value</div>
+                <div style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+                  Complete long-term access with <strong>50 MB</strong> files, a large volume of <strong>200 AI graded papers</strong> per month, and full handwriting OCR.
+                </div>
+              </div>
+
+            </div>
+          </div>
+          
+          <!-- Bottom Tagline -->
+          <div style="width: 100%; text-align: center; font-size: 13px; color: var(--secondary); font-style: italic; background: rgba(6, 182, 212, 0.03); border: 1px solid rgba(6, 182, 212, 0.1); padding: 8px; border-radius: 6px; font-weight: 500;">
+            “This pricing structure turns the MVP from a useful tool into a scalable education technology product.”
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>Subscription & Pricing</span></div>
+          <span class="slide-number-display">10 / 11</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 5.10: TVC & MVP LINKS (QR CODES) -->
+      <div class="slide" data-title="TVC & MVP Links" data-tag="CLOSING LINKS">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">RESOURCES</span>
+        </div>
+        <div class="slide-title">Scan to Explore Scorify</div>
+        <div class="slide-subtitle">Watch our TVC demonstration or try the live MVP platform yourself</div>
+        <div class="slide-body" style="align-items: center; justify-content: center; height: 100%;">
+          <div style="display: flex; gap: 60px; justify-content: center; width: 100%; max-width: 900px; margin: auto 0;">
+            
+            <!-- Left Card: TVC QR -->
+            <div class="glow-card" style="flex: 1; display: flex; flex-direction: column; align-items: center; padding: 30px; border: 1px solid rgba(6, 182, 212, 0.2); border-radius: 16px; background: rgba(6, 182, 212, 0.02);">
+              <div style="font-size: 18px; font-weight: 700; color: var(--secondary); margin-bottom: 8px; font-family: var(--font-display);">Scorify TVC Video</div>
+              <div style="font-size: 12px; color: var(--text-muted); text-align: center; margin-bottom: 20px; line-height: 1.4; height: 34px;">
+                Scan to watch our introductory concept film showing how Scorify grading works in classrooms.
+              </div>
+              <!-- QR Code Container -->
+              <div style="width: 180px; height: 180px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(6, 182, 212, 0.3); background: white; display: flex; align-items: center; justify-content: center;">
+                <img src="images/TVC_QR.jpg" style="width: 100%; height: 100%; object-fit: contain;">
+              </div>
+            </div>
+
+            <!-- Right Card: MVP QR -->
+            <div class="glow-card" style="flex: 1; display: flex; flex-direction: column; align-items: center; padding: 30px; border: 1px solid rgba(99, 102, 241, 0.2); border-radius: 16px; background: rgba(99, 102, 241, 0.02);">
+              <div style="font-size: 18px; font-weight: 700; color: var(--primary); margin-bottom: 8px; font-family: var(--font-display);">Live MVP Platform</div>
+              <div style="font-size: 12px; color: var(--text-muted); text-align: center; margin-bottom: 20px; line-height: 1.4; height: 34px;">
+                Scan to access the live web dashboard registry, upload sample scans, and try grading.
+              </div>
+              <!-- QR Code Container -->
+              <div style="width: 180px; height: 180px; border-radius: 12px; overflow: hidden; border: 1px solid rgba(99, 102, 241, 0.3); background: white; display: flex; align-items: center; justify-content: center;">
+                <img src="images/MVP_QR.jpg" style="width: 100%; height: 100%; object-fit: contain;">
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>Product Demonstrations</span></div>
+          <span class="slide-number-display">11 / 12</span>
+        </div>
+      </div>
+
+      <!-- SLIDE 14: Q&A / THANK YOU -->
+      <div class="slide" data-title="Questions & Answers" data-tag="CONTACT">
+        <div class="slide-header">
+          <div class="logo-container">
+            <div class="brand-logo-group">
+              <img class="brand-logo-img" src="assets/logos/scorify-logo.png" alt="Scorify Logo">
+            </div>
+            <div class="univ-logo-group">
+              <img class="univ-logo-img" src="assets/logos/FPT_University_Logo.png" alt="FPT Logo">
+            </div>
+          </div>
+          <span class="slide-tag">CLOSING</span>
+        </div>
+        <div class="slide-body" style="flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+          <h1 style="font-size: 52px; font-weight: 800; margin-bottom: 12px; background: linear-gradient(135deg, #ffffff, #c7d2fe); -webkit-background-clip: text; -webkit-text-fill-color: transparent;">Questions & Answers</h1>
+          <h2 style="font-size: 20px; color: var(--secondary); font-weight: 500; margin-bottom: 40px;">Thank You for Your Valuable Time</h2>
+          
+          <div style="display: flex; gap: 30px; justify-content: center; width: 100%; max-width: 600px;">
+            <div class="glow-card" style="flex: 1; padding: 20px 30px; display: flex; align-items: center; gap: 15px; text-align: left;">
+              <span style="font-size: 24px;">🌐</span>
+              <div>
+                <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Website</div>
+                <div style="font-size: 15px; font-weight: 600;">scorify-teal.vercel.app</div>
+              </div>
+            </div>
+
+            <div class="glow-card" style="flex: 1; padding: 20px 30px; display: flex; align-items: center; gap: 15px; text-align: left;">
+              <span style="font-size: 24px;">📞</span>
+              <div>
+                <div style="font-size: 11px; color: var(--text-muted); text-transform: uppercase;">Phone</div>
+                <div style="font-size: 15px; font-weight: 600;">0949739996</div>
+              </div>
+            </div>
+          </div>
+          
+          <p style="margin-top: 40px; font-size: 14px; color: var(--text-muted); font-style: italic;">"Let's work together to redefine the future of STEM exam grading."</p>
+        </div>
+        <div class="slide-footer">
+          <div class="footer-left"><span>Q&A Session</span></div>
+          <span class="slide-number-display">14 / 14</span>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- CONTROLS OVERLAY -->
+    <div class="controls-overlay">
+      <button class="btn-nav" id="btnPrev" onclick="navigate(-1)" title="Previous Slide (Left Arrow)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+      </button>
+      <span class="slide-indicator" id="slideIndicator">1 / 14</span>
+      <button class="btn-nav" id="btnNext" onclick="navigate(1)" title="Next Slide (Right Arrow/Space)">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg>
+      </button>
+    </div>
+
+  </div>
+
+  <script>
+    // DECK PRESENTATION SCRIPT
+    const slides = Array.from(document.querySelectorAll('.slide'));
+    const totalSlides = slides.length;
+    let currentSlideIndex = 0;
+
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const slideIndicator = document.getElementById('slideIndicator');
+    const progressBar = document.getElementById('progressBar');
+    const outlineList = document.getElementById('outlineList');
+
+    // Populate Slide Outline Drawer
+    slides.forEach((slide, index) => {
+      const title = slide.getAttribute('data-title') || `Slide ${index + 1}`;
+      const tag = slide.getAttribute('data-tag') || 'SECTION';
+      
+      // Dynamically update slide number display in the footer
+      const numDisplay = slide.querySelector('.slide-number-display');
+      if (numDisplay) {
+        numDisplay.textContent = `${index + 1} / ${totalSlides}`;
+      }
+      
+      const li = document.createElement('li');
+      li.className = `outline-item ${index === 0 ? 'active' : ''}`;
+      li.onclick = () => {
+        jumpToSlide(index);
+        toggleOutline();
+      };
+      
+      li.innerHTML = `
+        <span class="outline-num">${String(index + 1).padStart(2, '0')}</span>
+        <div style="display: flex; flex-direction: column;">
+          <span style="font-weight: 500; font-size: 13px;">${title}</span>
+          <span style="font-size: 9px; color: var(--text-muted); text-transform: uppercase;">${tag}</span>
+        </div>
+      `;
+      outlineList.appendChild(li);
+    });
+
+    function updatePresentation() {
+      // Update slides state
+      slides.forEach((slide, index) => {
+        slide.classList.remove('active', 'prev');
+        if (index === currentSlideIndex) {
+          slide.classList.add('active');
+        } else if (index < currentSlideIndex) {
+          slide.classList.add('prev');
+        }
+      });
+
+      // Update button controls
+      btnPrev.disabled = currentSlideIndex === 0;
+      btnNext.disabled = currentSlideIndex === totalSlides - 1;
+
+      // Update UI displays
+      slideIndicator.textContent = `${currentSlideIndex + 1} / ${totalSlides}`;
+      
+      // Update progress bar
+      const progressPercent = ((currentSlideIndex) / (totalSlides - 1)) * 100;
+      progressBar.style.width = `${progressPercent}%`;
+
+      // Update active outline list item
+      const outlineItems = document.querySelectorAll('.outline-item');
+      outlineItems.forEach((item, index) => {
+        if (index === currentSlideIndex) {
+          item.classList.add('active');
+        } else {
+          item.classList.remove('active');
+        }
+      });
+    }
+
+    function navigate(direction) {
+      const nextIndex = currentSlideIndex + direction;
+      if (nextIndex >= 0 && nextIndex < totalSlides) {
+        currentSlideIndex = nextIndex;
+        updatePresentation();
+      }
+    }
+
+    function jumpToSlide(index) {
+      if (index >= 0 && index < totalSlides) {
+        currentSlideIndex = index;
+        updatePresentation();
+      }
+    }
+
+    // Key handlers
+    window.addEventListener('keydown', (e) => {
+      // Hidden PDF Export trigger: Ctrl + Alt + E
+      if (e.ctrlKey && e.altKey && e.key.toLowerCase() === 'e') {
+        e.preventDefault();
+        window.print();
+        return;
+      }
+
+      if (e.key === 'ArrowRight' || e.key === 'Space' || e.key === ' ') {
+        e.preventDefault();
+        navigate(1);
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        navigate(-1);
+      } else if (e.key === 'Escape') {
+        const overlay = document.getElementById('drawerOverlay');
+        if (overlay.classList.contains('open')) {
+          toggleOutline();
+        }
+      }
+    });
+
+    // Drawer toggler
+    function toggleOutline() {
+      const overlay = document.getElementById('drawerOverlay');
+      const drawer = document.getElementById('outlineDrawer');
+      overlay.classList.toggle('open');
+      drawer.classList.toggle('open');
+    }
+
+    // Fullscreen toggler
+    function toggleFullscreen() {
+      const deck = document.getElementById('deck');
+      if (!document.fullscreenElement) {
+        deck.requestFullscreen().catch(err => {
+          alert(`Could not activate fullscreen: ${err.message}`);
+        });
+      } else {
+        document.exitFullscreen();
+      }
+    }
+
+    // Auto fit/scale presentation window to body viewport on resize
+    function autoScaleDeck() {
+      const deck = document.getElementById('deck');
+      const winWidth = window.innerWidth;
+      const winHeight = window.innerHeight;
+      
+      // Target dimensions
+      const targetWidth = 1280;
+      const targetHeight = 720;
+      
+      // Calculate scale factor
+      const scaleX = winWidth / targetWidth;
+      const scaleY = winHeight / targetHeight;
+      const scale = Math.min(scaleX, scaleY, 1) * 0.95; // Add a small margin
+      
+      if (!document.fullscreenElement) {
+        deck.style.transform = `scale(${scale})`;
+      } else {
+        deck.style.transform = 'none';
+      }
+    }
+
+    window.addEventListener('resize', autoScaleDeck);
+    
+    // Initialize
+    updatePresentation();
+    autoScaleDeck();
+  </script>
+</body>
+</html>
